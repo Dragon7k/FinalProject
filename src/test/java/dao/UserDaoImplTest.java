@@ -4,7 +4,6 @@ import by.epam.gamestore.dao.UserDao;
 import by.epam.gamestore.dao.impl.UserDaoImpl;
 import by.epam.gamestore.entity.User;
 import by.epam.gamestore.entity.UserRole;
-import by.epam.gamestore.entity.UserStatus;
 import by.epam.gamestore.exception.DaoException;
 import by.epam.gamestore.exception.DatabaseConnectionException;
 import org.junit.jupiter.api.Test;
@@ -14,16 +13,18 @@ import java.util.List;
 public class UserDaoImplTest {
 
     private UserDao userDao = UserDaoImpl.getInstance();
+
     @Test
-    public void findUserByIdTest(){
+    public void findUserByIdTest() {
         try {
-            System.out.println(userDao.findUserById(0).get());
+            System.out.println(userDao.findUserById(1).get());
         } catch (DatabaseConnectionException e) {
             e.printStackTrace();
         }
     }
+
     @Test
-    public void addUser(){
+    public void addUser() {
         User user = new User.UserBuilder()
                 .setFirstName("Alex")
                 .setLastName("Cooler")
@@ -31,22 +32,28 @@ public class UserDaoImplTest {
                 .setLogin("bublic28")
                 .setPassword("rest213")
                 .setRole(UserRole.USER)
-                .setStatus(UserStatus.UNBLOCKED)
+                .setStatus(false)
+                .setArchived(false)
                 .buildUser();
-        userDao.createUser(user);
-    }
-    @Test
-    public void deleteUserByIdTest(){
-       userDao.deleteUser(2);
-    }
-
-    @Test
-    public void BlockUser(){
-        userDao.blockUnblockUser(1,UserStatus.BLOCKED);
+        try {
+            userDao.addUser(user);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
-    public void FindAllUsersTest(){
+    public void deleteUserByIdTest() {
+        userDao.deleteUser(2);
+    }
+
+    @Test
+    public void BlockUser() {
+        userDao.blockUnblockUser(1, true);
+    }
+
+    @Test
+    public void FindAllUsersTest() {
         try {
             List<User> userList = userDao.findAllUser();
             userList.forEach(System.out::println);
@@ -56,7 +63,7 @@ public class UserDaoImplTest {
     }
 
     @Test
-    public void IsUserExistByEmail(){
+    public void IsUserExistByEmail() {
         System.out.println(userDao.IsUserExistByEmail("alexCool@mail.ru"));
     }
 }

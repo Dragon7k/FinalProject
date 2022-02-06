@@ -1,6 +1,6 @@
 package by.epam.gamestore.exception;
 
-public class DaoException extends Exception{
+public class DaoException extends Exception {
     public DaoException() {
     }
 

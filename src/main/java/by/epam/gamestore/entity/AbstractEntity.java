@@ -1,7 +1,5 @@
 package by.epam.gamestore.entity;
 
-import java.util.Objects;
-
 public abstract class AbstractEntity {
     private long id;
 

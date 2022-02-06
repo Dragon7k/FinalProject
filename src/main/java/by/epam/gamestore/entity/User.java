@@ -1,18 +1,19 @@
 package by.epam.gamestore.entity;
 
-public class User extends AbstractEntity{
+public class User extends AbstractEntity {
     private String firstName;
     private String lastName;
     private String email;
     private String login;
     private String password;
     private UserRole role;
-    private UserStatus userStatus;
+    private boolean userStatus;
+    private boolean archived;
 
     public User() {
     }
 
-    public User(long id, String firstName, String lastName,String email, String login, String password, UserRole role, UserStatus userStatus) {
+    public User(long id, String firstName, String lastName, String email, String login, String password, UserRole role, boolean userStatus, boolean archived) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -21,6 +22,7 @@ public class User extends AbstractEntity{
         this.password = password;
         this.role = role;
         this.userStatus = userStatus;
+        this.archived = archived;
     }
 
     public String getFirstName() {
@@ -71,12 +73,20 @@ public class User extends AbstractEntity{
         this.role = role;
     }
 
-    public UserStatus getUserStatus() {
+    public boolean isUserStatus() {
         return userStatus;
     }
 
-    public void setUserStatus(UserStatus userStatus) {
+    public void setUserStatus(boolean userStatus) {
         this.userStatus = userStatus;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 
     @Override
@@ -87,8 +97,9 @@ public class User extends AbstractEntity{
         sb.append(", email='").append(email).append('\'');
         sb.append(", login='").append(login).append('\'');
         sb.append(", password='").append(password).append('\'');
-        sb.append(", role=").append(role);
-        sb.append(", userStatus=").append(userStatus);
+        sb.append(", role=").append(role).append('\'');
+        sb.append(", userStatus=").append(userStatus).append('\'');
+        sb.append(", archived=").append(archived).append('\'');
         sb.append('}');
         return sb.toString();
     }
@@ -100,7 +111,8 @@ public class User extends AbstractEntity{
         private String password;
         private String firstName;
         private String lastName;
-        private UserStatus status;
+        private boolean status;
+        private boolean archived;
         private String email;
 
 
@@ -108,7 +120,7 @@ public class User extends AbstractEntity{
 
         }
 
-        public UserBuilder setStatus(UserStatus status) {
+        public UserBuilder setStatus(boolean status) {
             this.status = status;
             return this;
         }
@@ -143,13 +155,18 @@ public class User extends AbstractEntity{
             return this;
         }
 
+        public UserBuilder setArchived(boolean archived) {
+            this.archived = archived;
+            return this;
+        }
+
         public UserBuilder setEmail(String email) {
             this.email = email;
             return this;
         }
 
         public User buildUser() {
-            return new User(id, firstName, lastName, email, login, password, role, status);
+            return new User(id, firstName, lastName, email, login, password, role, status, archived);
         }
     }
 }

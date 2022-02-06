@@ -1,6 +1,6 @@
 package by.epam.gamestore.exception;
 
-public class DatabaseConnectionException extends Exception{
+public class DatabaseConnectionException extends Exception {
     public DatabaseConnectionException() {
     }
 

@@ -27,7 +27,7 @@ public class ConnectionTest {
         user.setLogin("Batyanya");
         user.setRole(UserRole.USER);
 
-        try (Connection connection = ConnectionFactory.getConnection()) {
+        try (Connection connection = ConnectionFactory.createConnection()) {
             preparedStatement = connection.prepareStatement(sqlAdd);
             preparedStatement.setLong(1, user.getId());
             preparedStatement.setString(2, user.getFirstName());

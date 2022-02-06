@@ -3,7 +3,6 @@ package by.epam.gamestore.connection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,19 +20,19 @@ public class ConnectionPool {
     private BlockingQueue<ProxyConnection> usingConnections;
     private static ConnectionPool instance;
 
-    private ConnectionPool(){
+    private ConnectionPool() {
         freeConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
         usingConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
 
         try {
             for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
-                ProxyConnection connection = new ProxyConnection(ConnectionFactory.getConnection());
+                ProxyConnection connection = new ProxyConnection(ConnectionFactory.createConnection());
                 freeConnections.offer(connection);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Connection is not create.", e);
         }
-        if(freeConnections.isEmpty()){
+        if (freeConnections.isEmpty()) {
             throw new RuntimeException("Connection pool is empty.");
         }
     }
@@ -43,15 +42,15 @@ public class ConnectionPool {
      *
      * @return the CustomConnectionPool
      */
-    public static ConnectionPool getInstance(){
-        if(!instanceCreated.get()){
+    public static ConnectionPool getInstance() {
+        if (!instanceCreated.get()) {
             lock.lock();
-            try{
-                if(instance == null){
+            try {
+                if (instance == null) {
                     instance = new ConnectionPool();
                     instanceCreated.set(true);
                 }
-            }finally {
+            } finally {
                 lock.unlock();
             }
         }
@@ -63,7 +62,7 @@ public class ConnectionPool {
      *
      * @return the connection
      */
-    public Connection takeConnection(){
+    public Connection takeConnection() {
         ProxyConnection connection = null;
         try {
             connection = freeConnections.take();
@@ -80,8 +79,8 @@ public class ConnectionPool {
      * @param connection the connection
      * @return the boolean
      */
-    public boolean releaseConnection(Connection connection){
-        if(!(connection instanceof ProxyConnection)) {
+    public boolean releaseConnection(Connection connection) {
+        if (!(connection instanceof ProxyConnection)) {
             return false;
         }
         try {
@@ -89,7 +88,7 @@ public class ConnectionPool {
             usingConnections.remove(proxy);
             freeConnections.put(proxy);
         } catch (InterruptedException e) {
-            logger.error("There are some problems with release connection",e);
+            logger.error("There are some problems with release connection", e);
         }
         return true;
     }
@@ -97,7 +96,7 @@ public class ConnectionPool {
     /**
      * Destroy ConnectionPool.
      */
-    public void destroyPool(){
+    public void destroyPool() {
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
                 freeConnections.take().realClose();
@@ -111,12 +110,12 @@ public class ConnectionPool {
     /**
      * Deregister driver.
      */
-    private void deregisterDriver(){
+    private void deregisterDriver() {
         DriverManager.getDrivers().asIterator().forEachRemaining(driver -> {
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {
-                logger.error("There are some problems with deregister driver",e);
+                logger.error("There are some problems with deregister driver", e);
             }
         });
     }
