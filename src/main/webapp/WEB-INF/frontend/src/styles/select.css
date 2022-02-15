@@ -1,0 +1,23 @@
+
+.dropdown {
+    list-style: none;
+    margin-left: 20px;   
+    color:#fff;
+}
+
+#dropdown-basic-button{
+    text-decoration: none;
+    border-radius: 20px;
+    padding: 3px 15px 3px 15px;
+    color: #fff;
+}
+
+.dropdown :hover {
+    background: #fff !important;
+    color: #2b1055 !important;
+}
+
+#dropdown-basic-button:focus,#dropdown-basic-button:active {
+    outline: none !important;
+    box-shadow: none;
+ }
