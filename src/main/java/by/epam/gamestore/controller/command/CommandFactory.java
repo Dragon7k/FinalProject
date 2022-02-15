@@ -2,10 +2,13 @@ package by.epam.gamestore.controller.command;
 
 
 import by.epam.gamestore.controller.command.impl.HomePageCommand;
+import by.epam.gamestore.controller.command.impl.LogInCommand;
+import by.epam.gamestore.controller.command.impl.LogOutCommand;
+import by.epam.gamestore.controller.command.impl.SignUpCommand;
 
 import java.util.EnumMap;
 
-import static by.epam.gamestore.controller.command.CommandType.HOME_PAGE;
+import static by.epam.gamestore.controller.command.CommandType.*;
 
 public final class CommandFactory {
     private static final CommandFactory instance = new CommandFactory();
@@ -14,9 +17,10 @@ public final class CommandFactory {
     private CommandFactory() {
         commands = new EnumMap<>(CommandType.class);
         commands.put(HOME_PAGE, new HomePageCommand());
-        /*commands.put(INVALID, new InvalidCommand());
-        commands.put(GO_TO_SIGN_IN_PAGE, new GoToSignInPageCommand());
-        commands.put(GO_TO_SIGN_UP_PAGE, new GoToSignUpPageCommand());
+        commands.put(LOG_IN, new LogInCommand());
+        commands.put(LOG_OUT, new LogOutCommand());
+        commands.put(SIGN_UP, new SignUpCommand());
+        /*commands.put(GO_TO_SIGN_UP_PAGE, new GoToSignUpPageCommand());
         commands.put(GO_TO_ABOUT_PAGE, new GoToAboutPageCommand());
         commands.put(GO_TO_RECIPES_PAGE, new GoToRecipesPageCommand());
         commands.put(VIEW_FULL_RECIPE, new ViewFullRecipeCommand());
@@ -29,7 +33,7 @@ public final class CommandFactory {
         commands.put(DELETE_POST, new DeleteRecipePostCommand());
         commands.put(CHANGE_LANGUAGE, new ChangeLanguageCommand());
         commands.put(LOGOUT, new LogoutCommand());
-        commands.put(SIGN_IN, new SignInCommand());
+
         commands.put(SIGN_UP, new SignUpCommand());*/
     }
 

@@ -62,8 +62,8 @@ public class UserDaoImplTest {
         }
     }
 
-    @Test
+   /* @Test
     public void IsUserExistByEmail() {
         System.out.println(userDao.IsUserExistByEmail("alexCool@mail.ru"));
-    }
+    }*/
 }

@@ -13,7 +13,7 @@ public interface UserDao {
 
     Optional<User> findUserById(long id) throws DatabaseConnectionException;
 
-    boolean IsUserExistByEmail(String email);
+    Optional<User> findUserByEmail(String email) throws DaoException;
 
     boolean addUser(User user) throws DaoException;
 

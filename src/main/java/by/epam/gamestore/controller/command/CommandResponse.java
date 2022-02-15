@@ -1,27 +1,19 @@
 package by.epam.gamestore.controller.command;
 
 public class CommandResponse {
-    private String json;
-    private String keyWord;
+    private String response;
+    private int status;
 
-    public CommandResponse(String json, String keyWord) {
-        this.json = json;
-        this.keyWord = keyWord;
+    public CommandResponse(String response, int status) {
+        this.response = response;
+        this.status = status;
     }
 
-    public String getJson() {
-        return json;
+    public String getResponse() {
+        return response;
     }
 
-    public void setJson(String json) {
-        this.json = json;
-    }
-
-    public String getKeyWord() {
-        return keyWord;
-    }
-
-    public void setKeyWord(String keyWord) {
-        this.keyWord = keyWord;
+    public int getStatus() {
+        return status;
     }
 }

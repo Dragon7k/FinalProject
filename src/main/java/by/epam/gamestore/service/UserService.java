@@ -5,10 +5,12 @@ import by.epam.gamestore.entity.UserRole;
 import by.epam.gamestore.exception.ServiceException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
-    User signUp(String login, String password, String email, UserRole role,
-                boolean status, String firstName, String lastName, boolean archived) throws ServiceException;
+    User signUp(User user) throws ServiceException;
 
     List<User> findAll() throws ServiceException;
+    Optional<User> retrieveUserIfExists(String password, String email) throws ServiceException;
+
 }

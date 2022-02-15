@@ -70,21 +70,21 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean IsUserExistByEmail(String email) {
-        boolean flag = false;
+    public Optional<User> findUserByEmail(String email) throws DaoException {
+        Optional<User> optionalUser = Optional.empty();
         try (Connection connection = connectionPool.takeConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_EMAIL);
             preparedStatement.setString(1, email);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                resultSet.next();
-                if (resultSet.getString(4).equals(email)) {
-                    flag = true;
+                if(resultSet.next()){
+                    optionalUser=Optional.of(buildUser(resultSet));
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, "error in findUserByEmail");
+            throw new DaoException(e.getMessage());
         }
-        return flag;
+        return optionalUser;
     }
 
     @Override

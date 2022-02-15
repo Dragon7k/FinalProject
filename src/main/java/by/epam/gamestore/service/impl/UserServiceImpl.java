@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
@@ -30,18 +31,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User signUp(String login, String password, String email, UserRole role, boolean status, String firstName, String lastName, boolean archived) throws ServiceException {
-        String passHash = DigestUtils.sha256Hex(password);
-        User user = new User.UserBuilder()
-                .setFirstName(firstName)
-                .setLastName(lastName)
-                .setEmail(email)
-                .setLogin(login)
-                .setPassword(passHash)
-                .setRole(UserRole.USER)
-                .setStatus(false)
-                .setArchived(false)
-                .buildUser();
+    public User signUp(User user) throws ServiceException {
+        String passHash = DigestUtils.sha256Hex(user.getPassword());
+        user.setPassword(passHash);
+        user.setRole(UserRole.USER);
+        System.out.println("user in service: "+user);
         try {
             userDao.addUser(user);
         } catch (DaoException e) {
@@ -62,4 +56,27 @@ public class UserServiceImpl implements UserService {
         }
         return userList;
     }
+
+    @Override
+    public Optional<User> retrieveUserIfExists(String password, String email) throws ServiceException {
+        UserDao userDao = UserDaoImpl.getInstance();
+        try {
+            Optional<User> optionalUser = userDao.findUserByEmail(email);
+            if (optionalUser.isEmpty()) {
+                return Optional.empty();
+            }
+            User user = optionalUser.get();
+            String passwordHash = DigestUtils.sha256Hex(password);
+            if (!(passwordHash.equals(user.getPassword()))) {
+                return Optional.empty();
+            }
+            return optionalUser;
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, e);
+            throw new ServiceException(e);
+        }
+    }
+
+
+
 }

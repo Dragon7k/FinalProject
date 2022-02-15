@@ -2,7 +2,10 @@ package by.epam.gamestore.controller.command;
 
 public enum CommandType {
     INVALID,
-    HOME_PAGE;
+    HOME_PAGE,
+    LOG_IN,
+    LOG_OUT,
+    SIGN_UP;
 
     public static CommandType getCommandType(String command) {
         if (command == null) {
