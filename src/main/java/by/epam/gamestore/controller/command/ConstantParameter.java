@@ -48,6 +48,10 @@ public final class ConstantParameter {
      * The constant USER_STATUS.
      */
     public static final String USER_STATUS = "user_status";
+    /**
+     * The constant block user.
+     */
+    public static final String USER_STATUS_CHANGE = "user status was chanched";
 
     private ConstantParameter() {
     }

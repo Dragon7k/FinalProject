@@ -52,7 +52,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findUserById(long id) throws DatabaseConnectionException {
+    public Optional<User> findUserById(long id) throws DaoException {
         Optional<User> user = Optional.empty();
         try (Connection connection = connectionPool.takeConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_ID);
@@ -64,7 +64,7 @@ public class UserDaoImpl implements UserDao {
             }
         } catch (SQLException e) {
             logger.error("query has failed", e);
-            throw new DatabaseConnectionException("query has failed");
+            throw new DaoException("query has failed");
         }
         return user;
     }

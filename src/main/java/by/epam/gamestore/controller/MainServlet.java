@@ -3,12 +3,10 @@ package by.epam.gamestore.controller;
 import by.epam.gamestore.controller.command.Command;
 import by.epam.gamestore.controller.command.CommandFactory;
 import by.epam.gamestore.controller.command.CommandResponse;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +38,7 @@ public class MainServlet extends HttpServlet {
         Command clientCommand = CommandFactory.getInstance().getCommand(commandName);
         CommandResponse result = clientCommand.execute(req);
 
-        if(!result.getResponse().equals(ERROR)) {
+        if (!result.getResponse().equals(ERROR)) {
             try {
                 res.getWriter().write(result.getResponse());
             } catch (IOException e) {
@@ -48,7 +46,7 @@ public class MainServlet extends HttpServlet {
                 res.setStatus(ERROR_STATUS_404);
             }
 
-        }else{
+        } else {
             res.setStatus(result.getStatus());
         }
     }

@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         String passHash = DigestUtils.sha256Hex(user.getPassword());
         user.setPassword(passHash);
         user.setRole(UserRole.USER);
-        System.out.println("user in service: "+user);
+        System.out.println("user in service: " + user);
         try {
             userDao.addUser(user);
         } catch (DaoException e) {
@@ -43,6 +43,11 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException();
         }
         return user;
+    }
+
+    @Override
+    public boolean blockUnblockUser(long id, boolean userStatus) {
+        return userDao.blockUnblockUser(id, userStatus);
     }
 
     @Override
@@ -59,7 +64,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> retrieveUserIfExists(String password, String email) throws ServiceException {
-        UserDao userDao = UserDaoImpl.getInstance();
         try {
             Optional<User> optionalUser = userDao.findUserByEmail(email);
             if (optionalUser.isEmpty()) {
@@ -77,6 +81,21 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public Optional<User> findUserById(long id) throws ServiceException {
+        Optional<User> optionalUser;
+        try {
+            optionalUser = userDao.findUserById(id);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, e.getMessage());
+            throw new ServiceException();
+        }
+        if (optionalUser.isEmpty()) {
+            return Optional.empty();
+        }else{
+            return optionalUser;
+        }
+    }
 
 
 }

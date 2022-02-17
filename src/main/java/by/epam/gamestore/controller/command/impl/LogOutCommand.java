@@ -14,6 +14,6 @@ public class LogOutCommand implements Command {
     public CommandResponse execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.invalidate();
-        return new CommandResponse(CLEAR_SESSION,OK);
+        return new CommandResponse(CLEAR_SESSION, OK);
     }
 }

@@ -9,8 +9,8 @@ const Head = () => {
             <a className="logo">LOGOTYPE</a>
 
             <ul className="ul">
-                <li className="li"><a href="/fields">Fields</a></li>
-                <li className="li"><a href="/responses">Responses</a></li>
+                <li className="li"><a href="/Orders">Fields</a></li>
+                <li className="li"><a href="/Responses">Responses</a></li>
                 <Select/>
             </ul>
         </div>

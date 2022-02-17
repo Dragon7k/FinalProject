@@ -1,10 +1,8 @@
 package by.epam.gamestore.controller.command;
 
 
-import by.epam.gamestore.controller.command.impl.HomePageCommand;
-import by.epam.gamestore.controller.command.impl.LogInCommand;
-import by.epam.gamestore.controller.command.impl.LogOutCommand;
-import by.epam.gamestore.controller.command.impl.SignUpCommand;
+import by.epam.gamestore.controller.command.impl.*;
+import by.epam.gamestore.controller.command.impl.ViewUserCommand;
 
 import java.util.EnumMap;
 
@@ -20,8 +18,8 @@ public final class CommandFactory {
         commands.put(LOG_IN, new LogInCommand());
         commands.put(LOG_OUT, new LogOutCommand());
         commands.put(SIGN_UP, new SignUpCommand());
-        /*commands.put(GO_TO_SIGN_UP_PAGE, new GoToSignUpPageCommand());
-        commands.put(GO_TO_ABOUT_PAGE, new GoToAboutPageCommand());
+        commands.put(VIEW_USER_COMMAND, new ViewUserCommand());
+        /*commands.put(GO_TO_ABOUT_PAGE, new GoToAboutPageCommand());
         commands.put(GO_TO_RECIPES_PAGE, new GoToRecipesPageCommand());
         commands.put(VIEW_FULL_RECIPE, new ViewFullRecipeCommand());
         commands.put(GO_TO_EDIT_BLOGGER_INFO, new GoToEditBloggerInfoCommand());
@@ -33,7 +31,6 @@ public final class CommandFactory {
         commands.put(DELETE_POST, new DeleteRecipePostCommand());
         commands.put(CHANGE_LANGUAGE, new ChangeLanguageCommand());
         commands.put(LOGOUT, new LogoutCommand());
-
         commands.put(SIGN_UP, new SignUpCommand());*/
     }
 

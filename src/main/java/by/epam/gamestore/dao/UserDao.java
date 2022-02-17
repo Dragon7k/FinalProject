@@ -11,7 +11,7 @@ public interface UserDao {
 
     List<User> findAllUser() throws DaoException;
 
-    Optional<User> findUserById(long id) throws DatabaseConnectionException;
+    Optional<User> findUserById(long id) throws  DaoException;
 
     Optional<User> findUserByEmail(String email) throws DaoException;
 

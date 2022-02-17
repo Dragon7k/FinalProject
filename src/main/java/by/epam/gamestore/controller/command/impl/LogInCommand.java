@@ -21,6 +21,7 @@ import static by.epam.gamestore.controller.command.ConstantParameter.*;
 public class LogInCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private UserService userService = UserServiceImpl.getInstance();
+
     @Override
     public CommandResponse execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -30,19 +31,19 @@ public class LogInCommand implements Command {
         String response;
         Optional<User> userOptional;
         try {
-            userOptional = userService.retrieveUserIfExists(passHash,email);
+            userOptional = userService.retrieveUserIfExists(passHash, email);
         } catch (ServiceException e) {
-            logger.log(Level.ERROR,e.getMessage());
+            logger.log(Level.ERROR, e.getMessage());
             return new CommandResponse(ERROR, ERROR_STATUS_500);
         }
-        if(userOptional.isPresent()){
+        if (userOptional.isPresent()) {
             User user = userOptional.get();
-            response =  new Gson().toJson(user);
+            response = new Gson().toJson(user);
             session.setAttribute(USER_STATUS, user.isUserStatus());
-        }else{
+        } else {
             return new CommandResponse(ERROR, ERROR_STATUS_500);
         }
 
-        return new CommandResponse(response,OK);
+        return new CommandResponse(response, OK);
     }
 }

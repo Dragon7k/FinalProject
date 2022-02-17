@@ -3,7 +3,6 @@ package by.epam.gamestore.controller.command.impl;
 import by.epam.gamestore.controller.command.Command;
 import by.epam.gamestore.controller.command.CommandResponse;
 import by.epam.gamestore.entity.User;
-import by.epam.gamestore.entity.UserRole;
 import by.epam.gamestore.exception.ServiceException;
 import by.epam.gamestore.service.UserService;
 import by.epam.gamestore.service.impl.UserServiceImpl;
@@ -25,15 +24,15 @@ public class SignUpCommand implements Command {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(user!=null){
+        if (user != null) {
             try {
                 userService.signUp(user);
             } catch (ServiceException e) {
                 return new CommandResponse(ERROR, ERROR_STATUS_500);
             }
             response = new Gson().toJson(user);
-            return new CommandResponse(response,OK);
+            return new CommandResponse(response, OK);
         }
-        return new CommandResponse(ERROR,ERROR_STATUS_500);
+        return new CommandResponse(ERROR, ERROR_STATUS_500);
     }
 }

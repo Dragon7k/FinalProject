@@ -5,7 +5,8 @@ public enum CommandType {
     HOME_PAGE,
     LOG_IN,
     LOG_OUT,
-    SIGN_UP;
+    SIGN_UP,
+    VIEW_USER_COMMAND;
 
     public static CommandType getCommandType(String command) {
         if (command == null) {
